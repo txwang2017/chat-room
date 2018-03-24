@@ -2,9 +2,10 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
-const session = require('express-session');
-const MongoStore = require('connect-mongodb-session')(session);
+const session = require('express-session')
+const MongoStore = require('connect-mongodb-session')(session)
 const config = require('./config/config.js')
+const path = require('path')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
@@ -17,12 +18,10 @@ app.use(session({
         maxAge: config.cookieMaxAge
     },
 }))
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', (req, res) => {
-    console.log(req.cookies)
-    console.log(req.session)
-    res.send('Hello World')
+    res.render(path.join(__dirname, 'frontend/index/index.html'))
 })
 
-
-app.listen(3000, '127.0.0.1')
+app.listen(config.webPort, config.webUrl)

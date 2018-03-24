@@ -6,5 +6,7 @@ module.exports = {
         databaseName: 'chat-room',
         collection: 'sessions'
     },
-    sessionSecret: 'txwang'
+    sessionSecret: 'txwang',
+    webPort: 3000,
+    webUrl: '127.0.0.1'
 };
