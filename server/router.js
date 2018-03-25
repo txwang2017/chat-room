@@ -1,13 +1,13 @@
 const router = require('express').Router()
 
-const doGet404 = require('./controller/404/404')
-const doSignIn = require('./controller/account/sign-in')
+const doGet404 = require('./controller/404')
+const account = require('./controller/account')
 
 router.get('/sign-in', (req, res) => {
   res.render('account/index')
 })
 
-router.post('/sign-in', doSignIn)
+router.post('/sign-in', account.doSignIn)
 
 router.get('/*', doGet404)
 
