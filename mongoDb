@@ -1,2 +1,15 @@
-#! /bin/bash
-mongod --dbpath=./db/
+#! /usr/bin/python
+
+import os
+import socket
+socket.setdefaulttimeout(3)
+
+dirs = os.listdir(os.getcwd())
+if "db" not in dirs:
+    os.mkdir('db')
+
+port = '27017'
+
+
+
+os.system('mongod --dbpath=./db/')
