@@ -33,3 +33,9 @@ body {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
+#error-msg{
+    margin-top: 5px;
+    color: red;
+    font: normal 20px "Arial";
+}

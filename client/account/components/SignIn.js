@@ -1,6 +1,6 @@
 import React from 'react'
 
-export class SignIn extends React.Component {
+class SignIn extends React.Component {
 
   constructor(props) {
     super()
@@ -24,7 +24,6 @@ export class SignIn extends React.Component {
   render() {
     return (
       <div className="container">
-        <h1 className="form-signin-heading">Please sign in</h1>
         <input type="text"
                className="form-control"
                placeholder="username"
@@ -34,7 +33,10 @@ export class SignIn extends React.Component {
                placeholder="password"
                onChange={this.setPassword}/>
         <button className="btn btn-lg btn-primary btn-block" onClick={this.doSignIn}>Sign in</button>
+        <p id="error-msg">{this.props.state.err}</p>
       </div>
     )
   }
 }
+
+export default SignIn

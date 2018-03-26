@@ -15,6 +15,8 @@ const getCookie = name => {
 
 export const signIn = userName => ({type: 'SIGN_IN', userName})
 
+export const doErr = err => ({type: 'ERR', err})
+
 export const doSignIn = (userName, password) => dispatch => {
   fetch('/sign-in', {
     method: 'POST',
@@ -28,6 +30,34 @@ export const doSignIn = (userName, password) => dispatch => {
   }).then(
     response => response.json()
   ).then(
-    userName => dispatch(signIn(userName))
+    response => {
+      if(response.err){
+        dispatch(doErr(response.err))
+      } else{
+        console.log(response)
+      }
+    }
+  )
+}
+
+export const doSignUp = (userName, password) => dispatch => {
+  fetch('/sign-up', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      "X-CSRFToken": getCookie("csrftoken"),
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({userName, password})
+  }).then(
+    response => response.json()
+  ).then(
+    response => {
+      if(response.err){
+        doErr(response.err)
+      } else{
+        console.log(response)
+      }
+    }
   )
 }

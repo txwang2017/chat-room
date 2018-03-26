@@ -7,7 +7,8 @@ const MongoStore = require('connect-mongodb-session')(session)
 const config = require('./config/config.js')
 const path = require('path')
 const engine = require('consolidate')
-const router = require('./router.js')
+const router = require('./router/index')
+const db = require('./db')
 
 
 app.engine('html', engine.htmling)
@@ -23,12 +24,16 @@ app.use(session({
   secret: config.sessionSecret,
   resave: false,
   saveUninitialized: true,
-  store: new MongoStore(config.mongoStoreConfig),
+  store: new MongoStore({
+    uri: config.mongoDBUri,
+    databaseName: config.databaseName,
+    collection: config.sessionCollection
+  }),
   cookie: {
     maxAge: config.cookieMaxAge
   },
 }))
 
-app.use(router)
+router(app)
 
 app.listen(config.webPort, config.webUrl)
