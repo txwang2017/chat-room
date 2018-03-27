@@ -15,7 +15,7 @@ const doSignUp = (req, res) => {
 
 const uploadAvatar = (req, res) => {
   console.log("******")
-  console.log(req.file)
+  console.log(req.body)
 }
 
 const doSignOut = (req, res) => {

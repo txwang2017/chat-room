@@ -41,14 +41,13 @@ export const doSignIn = (userName, password) => dispatch => {
 }
 
 export const uploadAvatar = avatar => dispatch => {
-  console.log('zxxcv')
   fetch('/upload-avatar', {
     method: 'POST',
     credentials: 'include',
     headers: {
-      'Accept': 'application/json',
+      'Accept': 'application/octet-stream',
       "X-CSRFToken": getCookie("csrftoken"),
-      'Content-Type': ''
+      'Content-Type': 'application/octet-stream'
     },
     body: avatar
   }).then(

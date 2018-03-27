@@ -23,8 +23,14 @@ class SignUp extends React.Component{
     }
 
     this.setAvatar = avatar => {
-      this.avatar = avatar
-      this.props.actions.uploadAvatar(this.avatar)
+      this.avatar = avatar.target.files[0]
+      const reader = new FileReader()
+      reader.onload = avatar => {
+        this.props.actions.uploadAvatar(avatar.currentTarget.result)
+      }
+      reader.readAsBinaryString(this.avatar)
+
+      //
     }
 
     this.doSignUp = () => {
