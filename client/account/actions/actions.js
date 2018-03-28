@@ -45,7 +45,7 @@ export const uploadAvatar = avatar => dispatch => {
     method: 'POST',
     credentials: 'include',
     headers: {
-      'Accept': 'application/octet-stream',
+      'Accept': 'application/json',
       "X-CSRFToken": getCookie("csrftoken"),
       'Content-Type': 'application/octet-stream'
     },

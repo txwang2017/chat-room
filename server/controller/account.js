@@ -14,8 +14,8 @@ const doSignUp = (req, res) => {
 }
 
 const uploadAvatar = (req, res) => {
-  console.log("******")
-  console.log(req.body)
+  //TODO: pass username as filename, return json data as callback function
+  Account.uploadAvatar('xxx.jpg', req.body, () => {})
 }
 
 const doSignOut = (req, res) => {

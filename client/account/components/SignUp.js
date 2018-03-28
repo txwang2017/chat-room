@@ -25,12 +25,10 @@ class SignUp extends React.Component{
     this.setAvatar = avatar => {
       this.avatar = avatar.target.files[0]
       const reader = new FileReader()
-      reader.onload = avatar => {
-        this.props.actions.uploadAvatar(avatar.currentTarget.result)
+      reader.onloadend = () => {
+        this.props.actions.uploadAvatar(reader.result)
       }
-      reader.readAsBinaryString(this.avatar)
-
-      //
+      reader.readAsArrayBuffer(this.avatar)
     }
 
     this.doSignUp = () => {
@@ -62,7 +60,7 @@ class SignUp extends React.Component{
           <input type="file"
                  id="avatar"
                  className="custom-file-input"
-                 accept="image/gif, image/jpeg, image/png"
+                 accept="image/png image/jpeg"
                  onChange={this.setAvatar}/>
         </p>
         <button className="btn btn-lg btn-primary btn-block" onClick={this.doSignUp}>Sign Up</button>

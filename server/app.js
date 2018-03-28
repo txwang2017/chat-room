@@ -18,6 +18,7 @@ app.set('view engine', 'html')
 app.use(express.static(path.join(__dirname, '../client')))
 
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.raw({type: 'application/octet-stream', limit: '2mb'}))
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(session({

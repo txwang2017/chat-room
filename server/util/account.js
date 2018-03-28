@@ -1,4 +1,6 @@
 const encrypt = require('crypto')
+const fs = require('fs')
+const path = require('path')
 
 const Account = require('../model/account')
 
@@ -44,7 +46,14 @@ const signUp = (userName, password, req, res) => {
   })
 }
 
+const uploadAvatar = (userName, avatarBuff, callback) => {
+  const avatarPath = path.join(__dirname, '../../client/uploads/avatar', userName)
+  console.log(avatarPath)
+  fs.writeFile(avatarPath, avatarBuff, callback)
+}
+
 module.exports = {
   signIn,
   signUp,
+  uploadAvatar
 }
