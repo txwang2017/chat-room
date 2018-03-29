@@ -1,6 +1,8 @@
 const encrypt = require('crypto')
 const fs = require('fs')
 const path = require('path')
+const jwt = require('jsonwebtoken')
+const config = require('../config/config')
 
 const Account = require('../model/account')
 
@@ -8,52 +10,67 @@ const sha256 = password => {
   return encrypt.createHash("sha256").update(password).digest('base64')
 }
 
-const performSignIn = (req, res, account) => {
-  res.send(JSON.stringify(account))
-}
-
-const signIn = (userName, password, req, res) => {
+const signIn = (userName, password, callback) => {
   password = sha256(password)
   Account.findOne({userName}, (err, account) => {
     if(err){
-      console.log(err)
-      res.send(JSON.stringify({err: 'unknown error, please try again'}))
+      callback({err: 'unknown error, please try again'}, null)
       return
     }
     if(account){
       if(account.password === password){
-        performSignIn(req, res, account)
+        callback(null, account)
       } else{
-        res.send(JSON.stringify({err: 'password is not correct'}))
+        callback({err: 'password is not correct'}, null)
       }
     } else{
-      res.send(JSON.stringify({err: 'user name dose not exist'}))
+      callback({err: 'user name dose not exist'}, null)
     }
   })
 }
 
-const signUp = (userName, password, req, res) => {
+const signUp = (userName, password, callback) => {
   password = sha256(password)
   Account.create({
     userName,
     password
   }, (err, account) => {
     if(err){
-      res.send(JSON.stringify({err: "user name already exist"}))
+      callback({err: "user name already exist"}, null)
     } else{
-      performSignIn(req, res, account)
+      callback(null, account)
     }
   })
 }
 
 const uploadAvatar = (userName, avatarBuff, callback) => {
+  console.log('iiuoo')
   const avatarPath = path.join(__dirname, '../../client/uploads/avatar', userName)
-  console.log(avatarPath)
-  fs.writeFile(avatarPath, avatarBuff, callback)
+  fs.writeFile(avatarPath, avatarBuff, err => {
+    callback(err)
+  })
+}
+
+const auth = (token, res, callback) => {
+  jwt.verify(token, config.tokenSecret, (err, decoded) => {
+    if(err){
+      callback(err, null)
+      return
+    }
+    const userId = decoded.id
+    Account.findOne({_id: userId}, (err, account) => {
+      if(err){
+        callback(err, null)
+        return
+      }
+      callback(null, account)
+    })
+  })
 }
 
 module.exports = {
   signIn,
   signUp,
-  uploadAvatar
+  uploadAvatar,
+  auth
 }

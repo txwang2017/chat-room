@@ -33,27 +33,34 @@ export const doSignIn = (userName, password) => dispatch => {
     response => {
       if(response.err){
         dispatch(doErr(response.err))
-      } else{
-        console.log(response)
+        return
       }
+      localStorage.setItem('token', response.token)
+      dispatch(signIn(response.userName))
     }
   )
 }
 
 export const uploadAvatar = avatar => dispatch => {
+  console.log('*****')
   fetch('/upload-avatar', {
     method: 'POST',
     credentials: 'include',
     headers: {
+      'Access-Token': localStorage.getItem('token'),
       'Accept': 'application/json',
-      "X-CSRFToken": getCookie("csrftoken"),
+      'X-CSRFToken': getCookie('csrftoken'),
       'Content-Type': 'application/octet-stream'
     },
     body: avatar
   }).then(
     response => response.json()
   ).then(
-    response => console.log('avatar uploaded')
+    response => {
+      if(response.err){
+        dispatch(doErr(response.err))
+      }
+    }
   )
 }
 
@@ -71,10 +78,33 @@ export const doSignUp = (userName, password, avatar) => dispatch => {
   ).then(
     response => {
       if(response.err){
-        doErr(response.err)
-      } else{
-        uploadAvatar(avatar)
+        dispatch(doErr(response.err))
+        return
       }
+      localStorage.setItem('token', response.token)
+      if(avatar){
+        dispatch(uploadAvatar(avatar))
+      } else{
+        dispatch(signIn(response.userName))
+      }
+    }
+  )
+}
+
+export const doAuth = () => dispatch => {
+  fetch('/auth', {
+    method: 'POST',
+    headers: {
+      'Access-Token': localStorage.getItem('token'),
+      'Accept': 'application/json',
+      'X-CSRFToken': getCookie('csrftoken'),
+      'Content-Type': 'application/json'
+    },
+  }).then(
+    response => response.json()
+  ).then(
+    response => {
+      console.log(response)
     }
   )
 }

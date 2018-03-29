@@ -23,6 +23,7 @@
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "htmling": "0.0.8",
+    "jsonwebtoken": "^8.2.0",
     "loader": "^2.1.1",
     "mongodb": "^3.0.5",
     "mongoose": "^5.0.11",

@@ -16,7 +16,10 @@ app.set('views', path.join(__dirname, '../client'))
 app.set('view engine', 'html')
 
 app.use(express.static(path.join(__dirname, '../client')))
-
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Headers', 'Access-Token');
+  next()
+})
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.raw({type: 'application/octet-stream', limit: '2mb'}))
 app.use(bodyParser.json())

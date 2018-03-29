@@ -6,5 +6,6 @@ module.exports = {
   accountCollection: 'account',
   sessionSecret: 'txwang',
   webPort: 3000,
-  webUrl: '127.0.0.1'
+  webUrl: '127.0.0.1',
+  tokenSecret: 'chat-room'
 };

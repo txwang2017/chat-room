@@ -26,7 +26,7 @@ class SignUp extends React.Component{
       this.avatar = avatar.target.files[0]
       const reader = new FileReader()
       reader.onloadend = () => {
-        this.props.actions.uploadAvatar(reader.result)
+        this.avatar = reader.result
       }
       reader.readAsArrayBuffer(this.avatar)
     }
@@ -34,9 +34,9 @@ class SignUp extends React.Component{
     this.doSignUp = () => {
       if(this.password1 !== this.password2){
         this.props.actions.doErr('please enter the same password')
-      } else{
-        this.props.actions.doSignUp(this.userName, this.password1, this.avatar)
+        return
       }
+      this.props.actions.doSignUp(this.userName, this.password1, this.avatar)
     }
   }
 
