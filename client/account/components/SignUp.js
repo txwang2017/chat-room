@@ -8,6 +8,7 @@ class SignUp extends React.Component{
     this.userName = ""
     this.password1 = ""
     this.password2 = ""
+    this.avatar = null
 
     this.setUserName = userName => {
       this.userName = userName.target.value
@@ -21,11 +22,20 @@ class SignUp extends React.Component{
       this.password2 = password2.target.value
     }
 
+    this.setAvatar = avatar => {
+      this.avatar = avatar.target.files[0]
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        this.props.actions.uploadAvatar(reader.result)
+      }
+      reader.readAsArrayBuffer(this.avatar)
+    }
+
     this.doSignUp = () => {
       if(this.password1 !== this.password2){
         this.props.actions.doErr('please enter the same password')
       } else{
-        this.props.actions.doSignUp(this.userName, this.password1)
+        this.props.actions.doSignUp(this.userName, this.password1, this.avatar)
       }
     }
   }
@@ -45,6 +55,14 @@ class SignUp extends React.Component{
                className="form-control"
                placeholder="password enter again"
                onChange={this.setPassword2}/>
+        <p>
+          <h8>upload avatar</h8>
+          <input type="file"
+                 id="avatar"
+                 className="custom-file-input"
+                 accept="image/png image/jpeg"
+                 onChange={this.setAvatar}/>
+        </p>
         <button className="btn btn-lg btn-primary btn-block" onClick={this.doSignUp}>Sign Up</button>
         <p id="error-msg">{this.props.state.err}</p>
       </div>

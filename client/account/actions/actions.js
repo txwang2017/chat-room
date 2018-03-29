@@ -40,7 +40,24 @@ export const doSignIn = (userName, password) => dispatch => {
   )
 }
 
-export const doSignUp = (userName, password) => dispatch => {
+export const uploadAvatar = avatar => dispatch => {
+  fetch('/upload-avatar', {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Accept': 'application/json',
+      "X-CSRFToken": getCookie("csrftoken"),
+      'Content-Type': 'application/octet-stream'
+    },
+    body: avatar
+  }).then(
+    response => response.json()
+  ).then(
+    response => console.log('avatar uploaded')
+  )
+}
+
+export const doSignUp = (userName, password, avatar) => dispatch => {
   fetch('/sign-up', {
     method: 'POST',
     headers: {
@@ -56,7 +73,7 @@ export const doSignUp = (userName, password) => dispatch => {
       if(response.err){
         doErr(response.err)
       } else{
-        console.log(response)
+        uploadAvatar(avatar)
       }
     }
   )

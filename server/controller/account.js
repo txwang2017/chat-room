@@ -13,6 +13,11 @@ const doSignUp = (req, res) => {
   Account.signUp(userName, password, req, res)
 }
 
+const uploadAvatar = (req, res) => {
+  //TODO: pass username as filename, return json data as callback function
+  Account.uploadAvatar('xxx.jpg', req.body, () => {})
+}
+
 const doSignOut = (req, res) => {
 
 }
@@ -20,5 +25,6 @@ const doSignOut = (req, res) => {
 module.exports = {
   doSignIn,
   doSignUp,
+  uploadAvatar,
   doSignOut
 }
