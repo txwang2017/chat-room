@@ -42,7 +42,6 @@ export const doSignIn = (userName, password) => dispatch => {
 }
 
 export const uploadAvatar = avatar => dispatch => {
-  console.log('*****')
   fetch('/upload-avatar', {
     method: 'POST',
     credentials: 'include',
@@ -60,11 +59,12 @@ export const uploadAvatar = avatar => dispatch => {
       if(response.err){
         dispatch(doErr(response.err))
       }
+      //TODO: set avatar status so that we can fetch avatar in the future
     }
   )
 }
 
-export const doSignUp = (userName, password, avatar) => dispatch => {
+export const doSignUp = (userName, password) => dispatch => {
   fetch('/sign-up', {
     method: 'POST',
     headers: {
@@ -82,11 +82,7 @@ export const doSignUp = (userName, password, avatar) => dispatch => {
         return
       }
       localStorage.setItem('token', response.token)
-      if(avatar){
-        dispatch(uploadAvatar(avatar))
-      } else{
-        dispatch(signIn(response.userName))
-      }
+      dispatch(signIn(response.userName))
     }
   )
 }
@@ -104,7 +100,10 @@ export const doAuth = () => dispatch => {
     response => response.json()
   ).then(
     response => {
-      console.log(response)
+      if(response.auth){
+        //TODO: set user avatar path
+        dispatch(signIn(response.userName))
+      }
     }
   )
 }

@@ -44,8 +44,7 @@ const signUp = (userName, password, callback) => {
 }
 
 const uploadAvatar = (userName, avatarBuff, callback) => {
-  console.log('iiuoo')
-  const avatarPath = path.join(__dirname, '../../client/uploads/avatar', userName)
+  const avatarPath = path.join(__dirname, '../../uploads/avatar', userName)
   fs.writeFile(avatarPath, avatarBuff, err => {
     callback(err)
   })

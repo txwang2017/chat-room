@@ -34,14 +34,12 @@ const performSignIn = (req, res, account) => {
 
 const uploadAvatar = (req, res) => {
   const token = req.headers['access-token']
-  console.log(token)
   if(token){
     Account.auth(token, res, (err, account) => {
       if(err){
         res.send(JSON.stringify(err))
         return
       }
-      console.log('+++++')
       Account.uploadAvatar(account.userName, req.body, err => {
         if(err){
           res.send(JSON.stringify(err))
