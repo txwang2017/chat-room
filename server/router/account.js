@@ -2,12 +2,13 @@ const router = require('express').Router()
 const multer = require('multer')
 const upload = multer()
 
-
 const account = require('../controller/account')
 
 router.get('/account', (req, res) => {
   res.render('account/index')
 })
+
+router.get('/sign-out', account.doSignOut)
 
 router.post('/sign-in', account.doSignIn)
 

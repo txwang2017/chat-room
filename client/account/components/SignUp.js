@@ -36,10 +36,7 @@ class SignUp extends React.Component{
         this.props.actions.doErr('please enter the same password')
         return
       }
-      this.props.actions.doSignUp(this.userName, this.password1)
-      if(this.avatar){
-        this.props.actions.uploadAvatar(this.avatar)
-      }
+      this.props.actions.doSignUp(this.userName, this.password1, this.avatar)
     }
   }
 

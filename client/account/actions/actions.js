@@ -1,7 +1,7 @@
 const getCookie = name => {
   let cookieValue = null;
   if (document.cookie && document.cookie !== '') {
-    let cookies = document.cookie.split(';');
+    const cookies = document.cookie.split(';');
     for (let i = 0; i < cookies.length; i++) {
       let cookie = cookies[i].trim();
       if (cookie.substring(0, name.length + 1) === (name + '=')) {
@@ -16,6 +16,8 @@ const getCookie = name => {
 export const signIn = userName => ({type: 'SIGN_IN', userName})
 
 export const doErr = err => ({type: 'ERR', err})
+
+export const signOut = () => ({type: 'SIGN_OUT'})
 
 export const doSignIn = (userName, password) => dispatch => {
   fetch('/sign-in', {
@@ -37,6 +39,7 @@ export const doSignIn = (userName, password) => dispatch => {
       }
       localStorage.setItem('token', response.token)
       dispatch(signIn(response.userName))
+      dispatch(setContent('header'))
     }
   )
 }
@@ -59,12 +62,11 @@ export const uploadAvatar = avatar => dispatch => {
       if(response.err){
         dispatch(doErr(response.err))
       }
-      //TODO: set avatar status so that we can fetch avatar in the future
     }
   )
 }
 
-export const doSignUp = (userName, password) => dispatch => {
+export const doSignUp = (userName, password, avatar) => dispatch => {
   fetch('/sign-up', {
     method: 'POST',
     headers: {
@@ -82,7 +84,9 @@ export const doSignUp = (userName, password) => dispatch => {
         return
       }
       localStorage.setItem('token', response.token)
+      dispatch(uploadAvatar(avatar))
       dispatch(signIn(response.userName))
+      dispatch(setContent('header'))
     }
   )
 }
@@ -103,7 +107,21 @@ export const doAuth = () => dispatch => {
       if(response.auth){
         //TODO: set user avatar path
         dispatch(signIn(response.userName))
+        dispatch(setContent('header'))
       }
     }
   )
 }
+
+export const doSignOut = () => dispatch => {
+  fetch('/sign-out').then(
+    response => response.json()
+  ).then(
+    response => {
+      localStorage.removeItem('token')
+      dispatch(signOut)
+      dispatch(setContent('sign-in'))
+  })
+}
+
+export const setContent = content => ({type: 'SET_CONTENT', content})

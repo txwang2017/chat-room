@@ -8,8 +8,8 @@ const config = require('./config/config.js')
 const path = require('path')
 const engine = require('consolidate')
 const router = require('./router/index')
+const tokenAuth = require('./middleware/tokenAuth')
 const db = require('./db')
-
 
 app.engine('html', engine.htmling)
 app.set('views', path.join(__dirname, '../client'))
@@ -22,6 +22,7 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Access-Token');
   next()
 })
+app.use(tokenAuth)
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.raw({type: 'application/octet-stream', limit: '2mb'}))
 app.use(bodyParser.json())

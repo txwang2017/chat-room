@@ -1,7 +1,7 @@
 const initialState = {
   userName: null,
-  userId: null,
-  err: null
+  err: null,
+  content: 'sign-in'
 }
 
 const setUserName = (newState, userName) => {
@@ -10,6 +10,10 @@ const setUserName = (newState, userName) => {
 
 const setErr = (newState, err) => {
   newState.err = err
+}
+
+const setContent = (newState, content) => {
+  newState.content = content
 }
 
 const reducer = (state=initialState, actions) => {
@@ -21,6 +25,13 @@ const reducer = (state=initialState, actions) => {
       break
     case 'ERR':
       setErr(newState, actions.err)
+      break
+    case 'SIGN_OUT':
+      setUserName(newState, null)
+      setContent(newState, 'sign-in')
+      break
+    case 'SET_CONTENT':
+      setContent(newState, actions.content)
       break
     default:
       break;

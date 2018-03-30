@@ -24,7 +24,6 @@ class SignIn extends React.Component {
   render() {
     return (
       <div className="container">
-        <p>{this.props.state.userName}</p>
         <input type="text"
                className="form-control"
                placeholder="username"

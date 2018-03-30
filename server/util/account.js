@@ -1,8 +1,6 @@
 const encrypt = require('crypto')
 const fs = require('fs')
 const path = require('path')
-const jwt = require('jsonwebtoken')
-const config = require('../config/config')
 
 const Account = require('../model/account')
 
@@ -50,26 +48,8 @@ const uploadAvatar = (userName, avatarBuff, callback) => {
   })
 }
 
-const auth = (token, res, callback) => {
-  jwt.verify(token, config.tokenSecret, (err, decoded) => {
-    if(err){
-      callback(err, null)
-      return
-    }
-    const userId = decoded.id
-    Account.findOne({_id: userId}, (err, account) => {
-      if(err){
-        callback(err, null)
-        return
-      }
-      callback(null, account)
-    })
-  })
-}
-
 module.exports = {
   signIn,
   signUp,
   uploadAvatar,
-  auth
 }
