@@ -124,15 +124,20 @@ export const doSignOut = () => dispatch => {
       localStorage.removeItem('token')
       dispatch(signOut)
       dispatch(setPanel('sign-in'))
+      dispatch(setAvatar(null))
   })
 }
 
 export const setPanel = panel => ({type: 'SET_PANEL', panel})
 
 export const getAvatar = userName => dispatch => {
-  fetch(`/get-avatar?userName=${userName}`).then(
-    response => {
-      console.log(response)
+  fetch(
+    `/get-avatar?userName=${userName}`
+  ).then(
+    response => response.blob()
+  ).then(
+    avatar => {
+      dispatch(setAvatar(URL.createObjectURL(avatar)))
     }
   )
 }

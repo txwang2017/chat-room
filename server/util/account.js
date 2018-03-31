@@ -49,11 +49,26 @@ const uploadAvatar = (userName, avatarBuff, callback) => {
 }
 
 const getAvatar = (userName, callback) => {
-
+  const avatarPath = path.join(__dirname, '../../uploads/avatar', userName)
+  const defaultAvatarPath = path.join(__dirname, '../../uploads/default/default-avatar.png')
+  fs.readFile(avatarPath, (err, data) => {
+    if(err){
+      fs.readFile(defaultAvatarPath, (err, data) => {
+        if(err){
+          callback(err, null)
+        } else{
+          callback(null, data)
+        }
+      })
+    } else{
+      callback(null, data)
+    }
+  })
 }
 
 module.exports = {
   signIn,
   signUp,
   uploadAvatar,
+  getAvatar,
 }

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
-const config = require('../config/config')
 
+const config = require('../config/config')
 const Account = require('../util/account')
 
 const doSignIn = (req, res) => {
@@ -62,7 +62,9 @@ const doAuth = (req, res) => {
 
 const getAvatar = (req, res) => {
   const userName = req.query.userName
-
+  Account.getAvatar(userName, (err, data) => {
+    res.send(data)
+  })
 }
 
 module.exports = {
