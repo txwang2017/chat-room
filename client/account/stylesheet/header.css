@@ -1,29 +1,26 @@
 #avatar{
     position: relative;
-    left: 60%;
+    left: 85%;
     width: 45px;
     height: 45px;
-}
-
-.navbar-header{
-    position: relative;
-    left: 90%;
 }
 
 .navbar.navbar-default{
     background-color: dimgray;
     font: 20px arial, sans-serif;
+    width: 100%
+}
+
+.dropdown-menu.dropdown-menu-right {
+    right: 0;
+    left: auto;
+    background-color: dimgray;
+}
+
+.dropdown-menu.dropdown-menu-right button{
+    color: white
 }
 
 #user-name{
     color: white;
-}
-
-.dropdown-menu{
-    background-color: dimgray;
-}
-
-.dropdown-menu span{
-    color: white;
-    font: 20px arial, sans-serif;
 }

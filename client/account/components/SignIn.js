@@ -28,18 +28,31 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <input type="text"
-               className="form-control"
-               placeholder="username"
-               onChange={this.setUserName}/>
-        <input type="password"
-               className="form-control"
-               placeholder="password"
-               onChange={this.setPassword}/>
-        <button className="btn btn-lg btn-primary btn-block" onClick={this.doSignIn}>Sign in</button>
-        <a href="#" onClick={this.handleSignUp}>Don't have an account? Sign Up here</a>
-        <p id="error-msg">{this.props.state.err}</p>
+      <div className="container text-center">
+        <form className="form-signin">
+          <img className="mb-4"
+               src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg"
+               alt="" width="72" height="72"/>
+          <h1 className="h3 mb-3 font-weight-normal">please sign in</h1>
+          <label htmlFor="inputUserName" className="sr-only">username</label>
+          <input type="text"
+                 id="inputUserName"
+                 className="form-control"
+                 placeholder="username"
+                 required=""
+                 autoFocus=""
+                 onChange={this.setUserName}/>
+          <label htmlFor="inputPassword" className="sr-only">password</label>
+          <input type="password"
+                 id="inputPassword"
+                 className="form-control"
+                 placeholder="password"
+                 required=""
+                 onChange={this.setPassword}/>
+          <button className="btn btn-lg btn-primary btn-block" onClick={this.doSignIn}>sign in</button>
+          <a href="#" onClick={this.handleSignUp}>Don't have an account? Sign up here</a>
+          <p id="error-msg">{this.props.state.err}</p>
+        </form>
       </div>
     )
   }

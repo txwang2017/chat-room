@@ -1,7 +1,7 @@
 import React from 'react'
 
-class SignUp extends React.Component{
-  constructor(props){
+class SignUp extends React.Component {
+  constructor(props) {
     super(props)
     this.props = props
 
@@ -32,7 +32,7 @@ class SignUp extends React.Component{
     }
 
     this.doSignUp = () => {
-      if(this.password1 !== this.password2){
+      if (this.password1 !== this.password2) {
         this.props.actions.doErr('please enter the same password')
         return
       }
@@ -45,32 +45,50 @@ class SignUp extends React.Component{
     }
   }
 
-  render(){
-    return(
-      <div className="container">
-        <input type="text"
-               className="form-control"
-               placeholder="username"
-               onChange={this.setUserName}/>
-        <input type="password"
-               className="form-control"
-               placeholder="password"
-               onChange={this.setPassword1}/>
-        <input type="password"
-               className="form-control"
-               placeholder="password enter again"
-               onChange={this.setPassword2}/>
-        <p>
-          <h8>upload avatar</h8>
-          <input type="file"
-                 id="avatar"
-                 className="custom-file-input"
-                 accept="image/png image/jpeg"
-                 onChange={this.setAvatar}/>
-        </p>
-        <button className="btn btn-lg btn-primary btn-block" onClick={this.doSignUp}>Sign Up</button>
-        <p id="error-msg">{this.props.state.err}</p>
-        <a href="#" onClick={this.handleSignIn}>Already have an account? Sign In</a>
+  render() {
+    return (
+      <div className="container text-center">
+        <form className="form-signup">
+          <h1 className="h3 mb-3 font-weight-normal">please sign up</h1>
+          <img className="mb-4"
+               src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg"
+               alt="" width="72" height="72"/>
+          <label htmlFor="inputUserName" className="sr-only">username</label>
+          <input type="text"
+                 id="inputUserName"
+                 className="form-control"
+                 placeholder="username"
+                 required=""
+                 autoFocus=""
+                 onChange={this.setUserName}/>
+          <label htmlFor="inputPassword" className="sr-only">password</label>
+          <input type="password"
+                 id="inputPassword"
+                 className="form-control"
+                 placeholder="password"
+                 required=""
+                 onChange={this.setPassword1}/>
+          <label htmlFor="inputPassword" className="sr-only">password</label>
+          <input type="password"
+                 id="inputPassword"
+                 className="form-control"
+                 placeholder="enter password again"
+                 required=""
+                 onChange={this.setPassword2}/>
+          <p>
+            <div className="custom-file">
+              <input type="file"
+                     onChange={this.setAvatar}
+                     accept="image/png image/jpeg"
+                     className="custom-file-input"
+                     id="customFile"/>
+                <label className="custom-file-label" htmlFor="customFile">upload avatar (optional)</label>
+            </div>
+          </p>
+          <button className="btn btn-lg btn-primary btn-block" onClick={this.doSignUp}>sign up</button>
+          <p id="error-msg">{this.props.state.err}</p>
+          <a href="#" onClick={this.handleSignIn}>Already have an account? Sign in</a>
+        </form>
       </div>
     )
   }
