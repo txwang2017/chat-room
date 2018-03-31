@@ -48,6 +48,10 @@ const uploadAvatar = (userName, avatarBuff, callback) => {
   })
 }
 
+const getAvatar = (userName, callback) => {
+
+}
+
 module.exports = {
   signIn,
   signUp,

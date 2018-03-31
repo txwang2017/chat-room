@@ -38,6 +38,11 @@ class SignUp extends React.Component{
       }
       this.props.actions.doSignUp(this.userName, this.password1, this.avatar)
     }
+
+    this.handleSignIn = () => {
+      this.props.actions.setPanel('sign-in')
+      this.props.actions.doErr(null)
+    }
   }
 
   render(){
@@ -65,6 +70,7 @@ class SignUp extends React.Component{
         </p>
         <button className="btn btn-lg btn-primary btn-block" onClick={this.doSignUp}>Sign Up</button>
         <p id="error-msg">{this.props.state.err}</p>
+        <a href="#" onClick={this.handleSignIn}>Already have an account? Sign In</a>
       </div>
     )
   }

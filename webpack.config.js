@@ -9,16 +9,28 @@ module.exports = {
     filename: '[name].bundle.js'
   },
   module: {
-    rules: [{
-      test: /\.js$/,
-      exclude: /(node_modules|bower_components)/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: ['es2015', 'react']
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015', 'react']
+          }
         }
-      }
-    }]
+      },
+      {
+        test: /\.(png|jpg|gif|JPG|GIF|PNG|JPEG|jpeg)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 819200
+          }
+        }
+      },
+    ],
   },
   watch: true,
   devtool: 'source-map',

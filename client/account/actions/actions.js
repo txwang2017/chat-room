@@ -38,8 +38,9 @@ export const doSignIn = (userName, password) => dispatch => {
         return
       }
       localStorage.setItem('token', response.token)
+      dispatch(doErr(null))
       dispatch(signIn(response.userName))
-      dispatch(setContent('header'))
+      dispatch(setPanel('header'))
     }
   )
 }
@@ -85,8 +86,9 @@ export const doSignUp = (userName, password, avatar) => dispatch => {
       }
       localStorage.setItem('token', response.token)
       dispatch(uploadAvatar(avatar))
+      dispatch(doErr(null))
       dispatch(signIn(response.userName))
-      dispatch(setContent('header'))
+      dispatch(setPanel('header'))
     }
   )
 }
@@ -106,8 +108,9 @@ export const doAuth = () => dispatch => {
     response => {
       if(response.auth){
         //TODO: set user avatar path
+        dispatch(doErr(null))
         dispatch(signIn(response.userName))
-        dispatch(setContent('header'))
+        dispatch(setPanel('header'))
       }
     }
   )
@@ -120,8 +123,18 @@ export const doSignOut = () => dispatch => {
     response => {
       localStorage.removeItem('token')
       dispatch(signOut)
-      dispatch(setContent('sign-in'))
+      dispatch(setPanel('sign-in'))
   })
 }
 
-export const setContent = content => ({type: 'SET_CONTENT', content})
+export const setPanel = panel => ({type: 'SET_PANEL', panel})
+
+export const getAvatar = userName => dispatch => {
+  fetch(`/get-avatar?userName=${userName}`).then(
+    response => {
+      console.log(response)
+    }
+  )
+}
+
+export const setAvatar = avatar => ({type: 'SET_AVATAR', avatar})

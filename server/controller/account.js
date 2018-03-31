@@ -60,10 +60,16 @@ const doAuth = (req, res) => {
   }
 }
 
+const getAvatar = (req, res) => {
+  const userName = req.query.userName
+
+}
+
 module.exports = {
   doSignIn,
   doSignUp,
   uploadAvatar,
   doSignOut,
   doAuth,
+  getAvatar
 }

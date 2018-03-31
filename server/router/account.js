@@ -18,4 +18,6 @@ router.post('/upload-avatar', upload.single('avatar'), account.uploadAvatar)
 
 router.post('/auth', account.doAuth)
 
+router.get('/get-avatar', account.getAvatar)
+
 module.exports = router

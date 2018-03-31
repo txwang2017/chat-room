@@ -16,6 +16,11 @@ class SignIn extends React.Component {
       this.password = password.target.value
     }
 
+    this.handleSignUp = () => {
+      this.props.actions.setPanel('sign-up')
+      this.props.actions.doErr(null)
+    }
+
     this.doSignIn = () => {
       this.props.actions.doSignIn(this.userName, this.password)
     }
@@ -33,6 +38,7 @@ class SignIn extends React.Component {
                placeholder="password"
                onChange={this.setPassword}/>
         <button className="btn btn-lg btn-primary btn-block" onClick={this.doSignIn}>Sign in</button>
+        <a href="#" onClick={this.handleSignUp}>Don't have an account? Sign Up here</a>
         <p id="error-msg">{this.props.state.err}</p>
       </div>
     )
