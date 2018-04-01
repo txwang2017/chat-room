@@ -10,6 +10,10 @@ const engine = require('consolidate')
 const router = require('./router/index')
 const tokenAuth = require('./middleware/tokenAuth')
 const db = require('./db')
+const http = require('http')
+
+const server = http.createServer(app);
+const io = require('socket.io').listen(server, {log:false});
 
 app.engine('html', engine.htmling)
 app.set('views', path.join(__dirname, '../client'))

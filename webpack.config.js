@@ -2,7 +2,9 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    account: './client/account/main.js'
+    account: './client/account/main.js',
+    chatroom: './client/chatroom/main.js',
+    index: './client/index/main.js'
   },
   output: {
     path: path.join(__dirname, 'client/dist'),

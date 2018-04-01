@@ -4,11 +4,9 @@ const upload = multer()
 
 const account = require('../controller/account')
 
-router.get('/account', (req, res) => {
+router.get('/', (req, res) => {
   res.render('account/index')
 })
-
-router.get('/sign-out', account.doSignOut)
 
 router.post('/sign-in', account.doSignIn)
 
@@ -19,5 +17,7 @@ router.post('/upload-avatar', upload.single('avatar'), account.uploadAvatar)
 router.post('/auth', account.doAuth)
 
 router.get('/get-avatar', account.getAvatar)
+
+router.get('/sign-out', account.doSignOut)
 
 module.exports = router

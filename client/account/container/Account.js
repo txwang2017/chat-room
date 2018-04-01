@@ -2,7 +2,6 @@ import React from 'react'
 
 import SignUp from '../components/SignUp'
 import SignIn from '../components/SignIn'
-import Header from '../components/Header'
 
 class AccountContainer extends React.Component{
   constructor(props){
@@ -26,12 +25,6 @@ class AccountContainer extends React.Component{
         return (
           <div className='sign-in-up'>
             <SignIn state={this.props.state} actions={this.props.actions}/>
-          </div>
-        )
-      case 'header':
-        return(
-          <div className='header'>
-            <Header state={this.props.state} actions={this.props.actions}/>
           </div>
         )
       default:

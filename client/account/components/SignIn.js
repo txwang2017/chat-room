@@ -3,7 +3,7 @@ import React from 'react'
 class SignIn extends React.Component {
 
   constructor(props) {
-    super()
+    super(props)
     this.props = props
     this.userName = ""
     this.password = ""
@@ -49,10 +49,10 @@ class SignIn extends React.Component {
                  placeholder="password"
                  required=""
                  onChange={this.setPassword}/>
-          <button className="btn btn-lg btn-primary btn-block" onClick={this.doSignIn}>sign in</button>
+        </form>
+          <button id="submit" className="btn btn-lg btn-primary btn-block" onClick={this.doSignIn}>sign in</button>
           <a href="#" onClick={this.handleSignUp}>Don't have an account? Sign up here</a>
           <p id="error-msg">{this.props.state.err}</p>
-        </form>
       </div>
     )
   }

@@ -1,26 +1,26 @@
 const getCookie = name => {
-  let cookieValue = null;
+  let cookieValue = null
   if (document.cookie && document.cookie !== '') {
-    const cookies = document.cookie.split(';');
+    const cookies = document.cookie.split(';')
     for (let i = 0; i < cookies.length; i++) {
-      let cookie = cookies[i].trim();
+      let cookie = cookies[i].trim()
       if (cookie.substring(0, name.length + 1) === (name + '=')) {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+        break
       }
     }
   }
-  return cookieValue;
-};
+  return cookieValue
+}
 
-export const signIn = userName => ({type: 'SIGN_IN', userName})
+const redirect = url => {
+  window.location.replace(url)
+}
 
 export const doErr = err => ({type: 'ERR', err})
 
-export const signOut = () => ({type: 'SIGN_OUT'})
-
 export const doSignIn = (userName, password) => dispatch => {
-  fetch('/sign-in', {
+  fetch('/account/sign-in', {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -35,18 +35,17 @@ export const doSignIn = (userName, password) => dispatch => {
     response => {
       if(response.err){
         dispatch(doErr(response.err))
-        return
+      } else{
+        localStorage.setItem('token', response.token)
+        dispatch(doErr(null))
+        dispatch(redirect('/chat-room'))
       }
-      localStorage.setItem('token', response.token)
-      dispatch(doErr(null))
-      dispatch(signIn(response.userName))
-      dispatch(setPanel('header'))
     }
   )
 }
 
 export const uploadAvatar = avatar => dispatch => {
-  fetch('/upload-avatar', {
+  fetch('/account/upload-avatar', {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -68,7 +67,7 @@ export const uploadAvatar = avatar => dispatch => {
 }
 
 export const doSignUp = (userName, password, avatar) => dispatch => {
-  fetch('/sign-up', {
+  fetch('/account/sign-up', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -82,19 +81,24 @@ export const doSignUp = (userName, password, avatar) => dispatch => {
     response => {
       if(response.err){
         dispatch(doErr(response.err))
-        return
+      } else{
+        localStorage.setItem('token', response.token)
+        dispatch(uploadAvatar(avatar))
+        dispatch(doErr(null))
+        dispatch(redirect('/chat-room'))
       }
-      localStorage.setItem('token', response.token)
-      dispatch(uploadAvatar(avatar))
-      dispatch(doErr(null))
-      dispatch(signIn(response.userName))
-      dispatch(setPanel('header'))
     }
   )
 }
 
+export const setPanel = panel => ({type: 'SET_PANEL', panel})
+
 export const doAuth = () => dispatch => {
-  fetch('/auth', {
+  const token = localStorage.getItem('token')
+  if(!token){
+    return
+  }
+  fetch('/account/auth', {
     method: 'POST',
     headers: {
       'Access-Token': localStorage.getItem('token'),
@@ -107,39 +111,9 @@ export const doAuth = () => dispatch => {
   ).then(
     response => {
       if(response.auth){
-        //TODO: set user avatar path
         dispatch(doErr(null))
-        dispatch(signIn(response.userName))
-        dispatch(setPanel('header'))
+        dispatch(redirect('/chat-room'))
       }
     }
   )
 }
-
-export const doSignOut = () => dispatch => {
-  fetch('/sign-out').then(
-    response => response.json()
-  ).then(
-    response => {
-      localStorage.removeItem('token')
-      dispatch(signOut)
-      dispatch(setPanel('sign-in'))
-      dispatch(setAvatar(null))
-  })
-}
-
-export const setPanel = panel => ({type: 'SET_PANEL', panel})
-
-export const getAvatar = userName => dispatch => {
-  fetch(
-    `/get-avatar?userName=${userName}`
-  ).then(
-    response => response.blob()
-  ).then(
-    avatar => {
-      dispatch(setAvatar(URL.createObjectURL(avatar)))
-    }
-  )
-}
-
-export const setAvatar = avatar => ({type: 'SET_AVATAR', avatar})

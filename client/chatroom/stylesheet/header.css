@@ -24,3 +24,10 @@
 #user-name{
     color: white;
 }
+
+
+#error-msg{
+    margin-top: 5px;
+    color: red;
+    font: normal 20px "Arial";
+}

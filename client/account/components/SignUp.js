@@ -63,14 +63,14 @@ class SignUp extends React.Component {
                  onChange={this.setUserName}/>
           <label htmlFor="inputPassword" className="sr-only">password</label>
           <input type="password"
-                 id="inputPassword"
+                 id="inputPassword1"
                  className="form-control"
                  placeholder="password"
                  required=""
                  onChange={this.setPassword1}/>
           <label htmlFor="inputPassword" className="sr-only">password</label>
           <input type="password"
-                 id="inputPassword"
+                 id="inputPassword2"
                  className="form-control"
                  placeholder="enter password again"
                  required=""
@@ -85,10 +85,10 @@ class SignUp extends React.Component {
                 <label className="custom-file-label" htmlFor="customFile">upload avatar (optional)</label>
             </div>
           </p>
-          <button className="btn btn-lg btn-primary btn-block" onClick={this.doSignUp}>sign up</button>
-          <p id="error-msg">{this.props.state.err}</p>
-          <a href="#" onClick={this.handleSignIn}>Already have an account? Sign in</a>
         </form>
+        <button id="submit" className="btn btn-lg btn-primary btn-block" onClick={this.doSignUp}>sign up</button>
+        <p id="error-msg">{this.props.state.err}</p>
+        <a href="#" onClick={this.handleSignIn}>Already have an account? Sign in</a>
       </div>
     )
   }
