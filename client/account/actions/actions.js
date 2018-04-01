@@ -45,6 +45,9 @@ export const doSignIn = (userName, password) => dispatch => {
 }
 
 export const uploadAvatar = avatar => dispatch => {
+  if(!avatar){
+    return
+  }
   fetch('/account/upload-avatar', {
     method: 'POST',
     credentials: 'include',

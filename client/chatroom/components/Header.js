@@ -15,7 +15,6 @@ class Header extends React.Component {
   }
 
   render() {
-    console.log(this.props.state)
     return (
       <nav className="navbar navbar-default">
         <img id='avatar' src={this.props.state.avatar} className="img-rounded"/>
