@@ -17,6 +17,8 @@ const redirect = url => {
   window.location.replace(url)
 }
 
+const userEvent = new Event('sendUserName')
+
 export const signIn = userName => ({type: 'SIGN_IN', userName})
 
 export const doErr = err => ({type: 'ERR', err})
@@ -43,6 +45,7 @@ export const doAuth = () => dispatch => {
         dispatch(doErr(null))
         dispatch(signIn(response.userName))
         dispatch(getAvatar(response.userName))
+        dispatchEvent(userEvent)
       } else{
         dispatch(redirect('/account'))
       }
@@ -96,3 +99,5 @@ export const getUserList = () => dispatch => {
     }
   )
 }
+
+export const setSocket = socket => ({type: 'SET_SOCKET', socket})

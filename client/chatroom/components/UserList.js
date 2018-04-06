@@ -11,7 +11,11 @@ class UserList extends React.Component{
   render(){
     return(
       <div>
-        {this.props.state.userList.splice(0, 1)}
+        {this.props.state.userList.map(user => (
+          <p>
+            <h3>{user}</h3>
+          </p>
+        ))}
       </div>
     )
   }

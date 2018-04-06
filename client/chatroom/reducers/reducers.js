@@ -3,7 +3,8 @@ const initialState = {
   avatar: null,
   err: null,
   msg: [],
-  userList: []
+  userList: [],
+  socket: null,
 }
 
 const setUserName = (newState, userName) => {
@@ -39,6 +40,10 @@ const removeUser = (newState, user) => {
   }
 }
 
+const setSocket = (newState, socket) => {
+  newState.socket = socket
+}
+
 const reducer = (state=initialState, actions) => {
   let newState = {}
   Object.assign(newState, state)
@@ -67,6 +72,9 @@ const reducer = (state=initialState, actions) => {
       break
     case 'REMOVE_USER':
       removeUser(newState, actions.user)
+      break
+    case 'SET_SOCKET':
+      setSocket(newState, actions.socket)
       break
     default:
       break

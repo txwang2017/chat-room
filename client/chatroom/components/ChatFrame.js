@@ -7,6 +7,7 @@ class ChatFrame extends React.Component{
     this.props = props
     this.msg = null
     this.socket = null
+    this.userName = null
 
     this.handleChangeMsg = msg => {
       this.msg = msg.target.value
@@ -32,9 +33,25 @@ class ChatFrame extends React.Component{
   }
 
   componentDidMount(){
-    this.socket.emit('userName', this.props.state.userName)
+    this.socket.on('connect', () => {
+      this.props.actions.setSocket(this.socket)
+    })
+
+    addEventListener('sendUserName', () => {
+      console.log(this.props.state.userName)
+      this.socket.emit('userName', {userName: this.props.state.userName})
+    })
+
     this.socket.on('msg', msg => {
       this.setMsg(msg)
+    })
+
+    this.socket.on('addUser', userName => {
+      this.props.actions.addUser(userName)
+    })
+
+    this.socket.on('removeUser', userName => {
+      this.props.actions.removeUser(userName)
     })
   }
 

@@ -7,10 +7,9 @@ const msgHandler = io => {
     onlineNum++
 
     socket.on('userName', userName => {
-      console.log(userName)
-      console.log('qqqqq')
-      socketList[userName] = socket
-      userList[socket] = userName
+      socket.broadcast.emit('addUser', userName.userName);
+      socketList[userName.userName] = socket
+      userList[socket.id] = userName.userName
     })
 
     socket.on('msg', msg => {
@@ -20,13 +19,20 @@ const msgHandler = io => {
         msg: msg.msg
       })
     })
+
+    socket.on('disconnect', reason => {
+      onlineNum--
+      let userName = userList[socket.id]
+      socket.broadcast.emit('removeUser', userName)
+      delete socketList[userName]
+      delete userList[socket.id]
+    })
   })
 }
 
 const getUserList = (req, res) => {
   let list = []
   for(let socket in socketList){
-    console.log(socket)
     if(socketList.hasOwnProperty(socket)){
       list.push(socket)
     }

@@ -6,6 +6,7 @@ class Header extends React.Component {
     this.props = props
 
     this.handleSignOut = () => {
+      this.props.state.socket.close()
       this.props.actions.doSignOut()
     }
   }
