@@ -77,3 +77,22 @@ export const getAvatar = userName => dispatch => {
 export const signOut = () => ({type: 'SIGN_OUT'})
 
 export const setAvatar = avatar => ({type: 'SET_AVATAR', avatar})
+
+export const setMsg = msg => ({type: 'SET_MSG', msg})
+
+export const setUserList = userList => ({type: 'SET_USER_LIST', userList})
+
+export const addUser = user => ({type: 'ADD_USER', user})
+
+export const removeUser = user => ({type: 'REMOVE_USER', user})
+
+export const getUserList = () => dispatch => {
+  fetch('/chat-room/user-list').then(
+    response => response.json()
+  ).then(
+    userList => {
+      dispatch(setUserList(userList))
+      console.log(userList)
+    }
+  )
+}

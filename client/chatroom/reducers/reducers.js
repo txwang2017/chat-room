@@ -2,6 +2,8 @@ const initialState = {
   userName: null,
   avatar: null,
   err: null,
+  msg: [],
+  userList: []
 }
 
 const setUserName = (newState, userName) => {
@@ -14,6 +16,27 @@ const setAvatar = (newState, avatar) => {
 
 const setErr = (newState, err) => {
   newState.err = err
+}
+
+const setMsg = (newState, msg) => {
+  newState.msg.push(msg)
+}
+
+const setUserList = (newState, userList) => {
+  newState.userList = userList
+}
+
+const addUser = (newState, user) => {
+  newState.userList.push(user)
+}
+
+const removeUser = (newState, user) => {
+  for(let i = 0; i < newState.userList.length; i++){
+    if(newState.userList[i] === user){
+      newState.userList.splice(i, 1)
+      break
+    }
+  }
 }
 
 const reducer = (state=initialState, actions) => {
@@ -32,6 +55,18 @@ const reducer = (state=initialState, actions) => {
       break
     case 'ERR':
       setErr(newState, actions.err)
+      break
+    case 'SET_MSG':
+      setMsg(newState, actions.msg)
+      break
+    case 'SET_USER_LIST':
+      setUserList(newState, actions.userList)
+      break
+    case 'ADD_USER':
+      addUser(newState, actions.user)
+      break
+    case 'REMOVE_USER':
+      removeUser(newState, actions.user)
       break
     default:
       break

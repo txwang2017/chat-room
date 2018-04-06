@@ -10,10 +10,13 @@ const engine = require('consolidate')
 const router = require('./router/index')
 const tokenAuth = require('./middleware/tokenAuth')
 const db = require('./db')
-const http = require('http')
+const {msgHandler} = require('./controller/chatroom')
+const server = require('http').createServer(app);
 
-const server = http.createServer(app);
-const io = require('socket.io').listen(server, {log:false});
+const io = require('socket.io')(server, {
+  path: '/chat-room/msg'
+});
+msgHandler(io)
 
 app.engine('html', engine.htmling)
 app.set('views', path.join(__dirname, '../client'))
@@ -31,6 +34,10 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.raw({type: 'application/octet-stream', limit: '2mb'}))
 app.use(bodyParser.json())
 app.use(cookieParser())
+app.use((req, res, next) => {
+  req.io = io
+  next()
+})
 app.use(session({
   secret: config.sessionSecret,
   resave: false,
@@ -47,4 +54,4 @@ app.use(session({
 
 router(app)
 
-app.listen(config.webPort, config.webUrl)
+server.listen(config.webPort, config.webUrl)

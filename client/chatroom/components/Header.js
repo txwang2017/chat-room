@@ -10,10 +10,6 @@ class Header extends React.Component {
     }
   }
 
-  componentWillMount() {
-    this.props.actions.doAuth()
-  }
-
   render() {
     return (
       <nav className="navbar navbar-default">
