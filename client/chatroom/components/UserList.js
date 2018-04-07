@@ -4,19 +4,22 @@ class UserList extends React.Component{
   constructor(props){
     super(props)
     this.props = props
+    this.handleMsgTo = userName => {
+      this.props.actions.setMsgTo(userName.target.value)
+    }
   }
   componentWillMount(){
     this.props.actions.getUserList()
   }
+
   render(){
     return(
-      <div>
+      <select className="custom-select" size="10">
+        <p>users online</p>
         {this.props.state.userList.map(user => (
-          <p>
-            <h3>{user}</h3>
-          </p>
+          <option className="user-option" value={user} onClick={this.handleMsgTo}>{user}</option>
         ))}
-      </div>
+      </select>
     )
   }
 }

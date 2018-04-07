@@ -95,9 +95,10 @@ export const getUserList = () => dispatch => {
   ).then(
     userList => {
       dispatch(setUserList(userList))
-      console.log(userList)
     }
   )
 }
 
 export const setSocket = socket => ({type: 'SET_SOCKET', socket})
+
+export const setMsgTo = userName => ({type: 'SET_MSG_TO', userName})

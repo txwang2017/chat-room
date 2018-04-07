@@ -8,13 +8,32 @@ const msgHandler = io => {
 
     socket.on('userName', userName => {
       socket.broadcast.emit('addUser', userName.userName);
+      socket.broadcast.emit('msg', {
+        from: 'system',
+        msg: `user ${userName.userName} logged in`
+      })
       socketList[userName.userName] = socket
       userList[socket.id] = userName.userName
     })
 
     socket.on('msg', msg => {
+      if(msg.to !== null){
+        let socketTo = socketList[msg.to]
+        socketTo.emit('msg', {
+          from: userList[socket.id],
+          to: msg.to,
+          msg: msg.msg
+        })
+      } else{
+        socket.broadcast.emit('msg', {
+          from: userList[socket.id],
+          to: msg.to,
+          msg: msg.msg
+        })
+      }
+
       socket.emit('msg', {
-        from: userList[socket],
+        from: userList[socket.id],
         to: msg.to,
         msg: msg.msg
       })
@@ -24,6 +43,10 @@ const msgHandler = io => {
       onlineNum--
       let userName = userList[socket.id]
       socket.broadcast.emit('removeUser', userName)
+      socket.broadcast.emit('msg', {
+        from: 'system',
+        msg: `user ${userName} logged out`
+      })
       delete socketList[userName]
       delete userList[socket.id]
     })

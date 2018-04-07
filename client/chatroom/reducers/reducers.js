@@ -5,6 +5,7 @@ const initialState = {
   msg: [],
   userList: [],
   socket: null,
+  msgTo: null,
 }
 
 const setUserName = (newState, userName) => {
@@ -44,6 +45,10 @@ const setSocket = (newState, socket) => {
   newState.socket = socket
 }
 
+const setMsgTo = (newState, userName) => {
+  newState.msgTo = userName
+}
+
 const reducer = (state=initialState, actions) => {
   let newState = {}
   Object.assign(newState, state)
@@ -76,11 +81,13 @@ const reducer = (state=initialState, actions) => {
     case 'SET_SOCKET':
       setSocket(newState, actions.socket)
       break
+    case 'SET_MSG_TO':
+      setMsgTo(newState, actions.userName)
+      break
     default:
       break
   }
   return newState
 }
-
 
 export default reducer

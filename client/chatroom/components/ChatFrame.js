@@ -16,12 +16,13 @@ class ChatFrame extends React.Component{
     this.handleSendMsg = () => {
       this.socket.emit('msg', {
         msg: this.msg,
-        to: 'qqq'
+        to: this.props.state.msgTo
       })
+      document.getElementById('msg-content').value = ''
     }
 
     this.setMsg = msg => {
-      this.socket.emit('userName', this.props.state.userName)
+      this.props.actions.setMsg(msg)
     }
   }
 
@@ -38,7 +39,6 @@ class ChatFrame extends React.Component{
     })
 
     addEventListener('sendUserName', () => {
-      console.log(this.props.state.userName)
       this.socket.emit('userName', {userName: this.props.state.userName})
     })
 
@@ -57,15 +57,18 @@ class ChatFrame extends React.Component{
 
   render(){
     return(
-      <div className="container">
-        <div className="row">
-          {this.props.state.msg.map((msg, k) => (
-            <p>{msg.msg}</p>
+      <div id="chat-frame">
+        <div id="display-msg">
+          {this.props.state.msg.map(msg => (
+            <div className="row">
+              <p>{msg.from}:</p>
+              <p>{msg.msg}</p>
+            </div>
           ))}
         </div>
-        <div className="row">
-          <input type="text" className="form-control" onChange={this.handleChangeMsg}/>
-          <button onClick={this.handleSendMsg}>send</button>
+        <div className="row" id="input-msg">
+          <textarea id="msg-content" className="form-control" onChange={this.handleChangeMsg}/>
+          <button id="send-msg" className="btn btn-success" onClick={this.handleSendMsg}>send</button>
         </div>
       </div>
     )

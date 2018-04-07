@@ -17,8 +17,10 @@ class ChatRoomContainer extends React.Component{
     return(
       <div>
         <Header state={this.props.state} actions={this.props.actions}/>
-        <ChatFrame state={this.props.state} actions={this.props.actions}/>
-        <UserList state={this.props.state} actions={this.props.actions}/>
+        <div className="container">
+          <ChatFrame state={this.props.state} actions={this.props.actions}/>
+          <UserList state={this.props.state} actions={this.props.actions}/>
+        </div>
       </div>
     )
   }

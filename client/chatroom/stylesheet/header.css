@@ -31,3 +31,26 @@
     color: red;
     font: normal 20px "Arial";
 }
+
+#chat-frame{
+    float: left;
+    min-height: 800px;
+    left: 15%;
+    width: 45%;
+    margin-right: 10%;
+}
+
+.custom-select{
+    left: 75%;
+    max-width: 20%;
+}
+
+#display-msg{
+    min-height: 500px;
+}
+
+
+/*#send-msg{*/
+    /*right: 0;*/
+    /*left: auto;*/
+/*}*/
